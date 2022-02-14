@@ -31,10 +31,12 @@ import MealItem from "./MealItem/MealItem";
 // ];
 
 const AvailableMeals = () => {
-  const [meals, setMeals] = useState([])
+  const [meals, setMeals] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   
   useEffect(() => {
     const fetchMeals = async () => {
+      setIsLoading(true)
       const response = await fetch(
         "https://food-order-app-255b2-default-rtdb.europe-west1.firebasedatabase.app/meals.json"
       );
@@ -51,9 +53,18 @@ const AvailableMeals = () => {
         })
       }
       setMeals(loadedMeals)
+      setIsLoading(false)
     };
     fetchMeals();
   }, []);
+
+  if (isLoading) {
+    return (
+      <section>
+        <p className={classes.loading}>Loading...</p>
+      </section>
+    )
+  }
 
   const mealsList = meals.map((meal) => (
     <MealItem
