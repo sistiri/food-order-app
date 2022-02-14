@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Card from "../UI/Card";
 import classes from "./AvailableMeals.module.css";
 import MealItem from "./MealItem/MealItem";
 
 const AvailableMeals = (props) => {
   const [meals, setMeals] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const apiURL =
     "https://food-order-app-255b2-default-rtdb.europe-west1.firebasedatabase.app/DUMMY_MEALS.json";
@@ -25,6 +26,7 @@ const AvailableMeals = (props) => {
         });
       }
       setMeals(loadedMeals);
+      setIsLoading(false)
       console.log(loadedMeals);
     };
     fetchAvailableMeals();
@@ -41,11 +43,13 @@ const AvailableMeals = (props) => {
   ));
 
   return (
-    <section className={classes.meals}>
-      <Card>
-        <ul>{mealsList}</ul>
-      </Card>
-    </section>
+    <Fragment>
+      {isLoading ? <p className={classes.loading}>Loading...</p> : <section className={classes.meals}>
+        <Card>
+          <ul>{mealsList}</ul>
+        </Card>
+      </section>}
+    </Fragment>
   );
 };
 
