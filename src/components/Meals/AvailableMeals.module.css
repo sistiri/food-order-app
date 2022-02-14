@@ -11,8 +11,13 @@
     padding: 0;
   }
 
-  .loading {
+  .MealsLoading {
     color: white;
+    text-align: center;
+  }
+
+  .MealsError {
+    color: red;
     text-align: center;
   }
   
